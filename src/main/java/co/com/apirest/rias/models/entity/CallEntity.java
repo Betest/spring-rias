@@ -2,18 +2,25 @@ package co.com.apirest.rias.models.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Type;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "calls")
@@ -43,14 +50,18 @@ public class CallEntity implements Serializable {
 
 	@Column(name = "createat")
 	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date createAt;
 	
+	@OneToMany(mappedBy = "calls", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<CandidateEntity> candidates;
+
+
 	@PrePersist
 	public void prePersist() {
 		createAt = new Date();
 	}
-	
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -75,6 +86,14 @@ public class CallEntity implements Serializable {
 		this.description = description;
 	}
 
+	public boolean isCallStatus() {
+		return callStatus;
+	}
+
+	public void setCallStatus(boolean callStatus) {
+		this.callStatus = callStatus;
+	}
+
 	public Double getSalary() {
 		return salary;
 	}
@@ -89,14 +108,6 @@ public class CallEntity implements Serializable {
 
 	public void setCreateAt(Date createAt) {
 		this.createAt = createAt;
-	}
-
-	public Boolean getCallStatus() {
-		return callStatus;
-	}
-
-	public void setCallStatus(Boolean callStatus) {
-		this.callStatus = callStatus;
 	}
 
 	public static long getSerialversionuid() {

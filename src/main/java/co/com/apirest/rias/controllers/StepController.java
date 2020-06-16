@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +21,7 @@ import co.com.apirest.rias.models.services.IStepService;
 
 @CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
-@RequestMapping("/api/step")
+@RequestMapping(value = "/api/step")
 public class StepController {
 	
 	@Autowired
@@ -55,10 +56,14 @@ public class StepController {
 		return stepService.save(currentStep);
 	}
 	
-	@DeleteMapping("/deletecall")
+	@DeleteMapping("/delete")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@RequestBody StepEntity stepEntity) {
-		stepService.delete(stepEntity.getId());
+		try{
+			stepService.delete(stepEntity.getId());
+		}catch (Exception e) {
+			ResponseEntity.badRequest().body(HttpStatus.BAD_REQUEST);
+		}
 	}
 
 }

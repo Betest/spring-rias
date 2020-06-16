@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +20,7 @@ import co.com.apirest.rias.models.services.ICallService;
 
 @CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
-@RequestMapping("/api/call")
+@RequestMapping(value ="/api/call")
 public class CallController {
 	
 	@Autowired
@@ -29,6 +30,7 @@ public class CallController {
 	public List<CallEntity> index(){		
 		return callsService.findAll();		
 	}
+	
 	
 	@GetMapping("/get")
 	public CallEntity getCalls(@RequestBody CallEntity callsEntity) {
@@ -49,16 +51,21 @@ public class CallController {
 		
 		currentCall.setName(callsEntity.getName());
 		currentCall.setDescription(callsEntity.getDescription());
-		currentCall.setCallStatus(callsEntity.getCallStatus());
+		currentCall.setCallStatus(callsEntity.isCallStatus());
 		currentCall.setSalary(callsEntity.getSalary());
 		
 		return callsService.save(currentCall);
 	}
 	
-	@DeleteMapping("/deletecall")
+	@DeleteMapping("/delete")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@RequestBody CallEntity callsEntity) {
-		callsService.delete(callsEntity.getId());
+		try {
+			callsService.delete(callsEntity.getId());			
+		}catch (Exception e) {
+			ResponseEntity.badRequest().body(HttpStatus.BAD_REQUEST);
+		}
+		
 	}
 
 }
