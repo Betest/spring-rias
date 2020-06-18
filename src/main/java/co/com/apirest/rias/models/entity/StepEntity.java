@@ -22,7 +22,11 @@ public class StepEntity implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@Column(name = "step_id")
+	private Long stepid;
+	
+	@Column(name = "call_idfk")
+	private int callidfk;
 	
 	@Column(name = "name")
 	private String name;
@@ -32,13 +36,23 @@ public class StepEntity implements Serializable {
 	
 	@Column(name = "comment")
 	private String comment;
+	
+	
 
-	public Long getId() {
-		return id;
+	public int getCallidfk() {
+		return callidfk;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setCallidfk(int callidfk) {
+		this.callidfk = callidfk;
+	}
+
+	public Long getStepid() {
+		return stepid;
+	}
+
+	public void setStepid(Long stepid) {
+		this.stepid = stepid;
 	}
 
 	public String getName() {

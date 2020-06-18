@@ -33,7 +33,8 @@ public class CallEntity implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@Column(name = "call_id")
+	private Long callid;
 
 	@Column(name = "name")
 	private String name;
@@ -48,13 +49,15 @@ public class CallEntity implements Serializable {
 	@Column(name = "salary")
 	private Double salary;
 
-	@Column(name = "createat")
+	@Column(name = "create_at")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date createAt;
 	
-	@OneToMany(mappedBy = "calls", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<CandidateEntity> candidates;
+	/*
+	 * @OneToMany(mappedBy = "calls", fetch = FetchType.LAZY, cascade =
+	 * CascadeType.ALL) private List<CandidateEntity> candidates;
+	 */
 
 
 	@PrePersist
@@ -62,13 +65,18 @@ public class CallEntity implements Serializable {
 		createAt = new Date();
 	}
 
-	public Long getId() {
-		return id;
+
+	public Long getCallid() {
+		return callid;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+
+
+	public void setCallid(Long callid) {
+		this.callid = callid;
 	}
+
+
 
 	public String getName() {
 		return name;

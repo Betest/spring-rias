@@ -28,23 +28,21 @@ public class CandidateEntity implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
-	@Column(name = "detailid")
-	private Long detailId;
+	@Column(name = "candidate_id")
+	private Long candidateid;
 	
 	@Column(name = "name")
 	private String name;
 	
-	@Column(name = "lastname")
+	@Column(name = "last_name")
 	private String lastName;
 	
-	@Column(name = "salaryaspiration")
+	@Column(name = "salary_aspiration")
 	private Float salaryAspiration;
 	
 	
-	@OneToMany(cascade = { CascadeType.ALL })
-	@JoinTable(name = "candidates_calls",
+	@ManyToMany(cascade = { CascadeType.ALL })
+	@JoinTable(name = "call_candidate",
 			joinColumns = @JoinColumn(name="candidate_id"),
 			inverseJoinColumns = @JoinColumn(name="call_id"))	
 	private List<CallEntity> calls ;
@@ -59,20 +57,13 @@ public class CandidateEntity implements Serializable{
 
 	
 
-	public Long getId() {
-		return id;
+
+	public Long getCandidateid() {
+		return candidateid;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Long getDetailId() {
-		return detailId;
-	}
-
-	public void setDetailId(Long detailId) {
-		this.detailId = detailId;
+	public void setCandidateid(Long candidateid) {
+		this.candidateid = candidateid;
 	}
 
 	public String getName() {

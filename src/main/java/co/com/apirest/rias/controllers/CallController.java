@@ -34,7 +34,7 @@ public class CallController {
 	
 	@GetMapping("/get")
 	public CallEntity getCalls(@RequestBody CallEntity callsEntity) {
-		return callsService.findById(callsEntity.getId());
+		return callsService.findById(callsEntity.getCallid());
 	}
 	
 	@PostMapping("/save")
@@ -47,7 +47,7 @@ public class CallController {
 	@PutMapping("/update")
 	@ResponseStatus(HttpStatus.CREATED)
 	public CallEntity update(@RequestBody CallEntity callsEntity) {
-		CallEntity currentCall = callsService.findById(callsEntity.getId());
+		CallEntity currentCall = callsService.findById(callsEntity.getCallid());
 		
 		currentCall.setName(callsEntity.getName());
 		currentCall.setDescription(callsEntity.getDescription());
@@ -61,7 +61,7 @@ public class CallController {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@RequestBody CallEntity callsEntity) {
 		try {
-			callsService.delete(callsEntity.getId());			
+			callsService.delete(callsEntity.getCallid());			
 		}catch (Exception e) {
 			ResponseEntity.badRequest().body(HttpStatus.BAD_REQUEST);
 		}

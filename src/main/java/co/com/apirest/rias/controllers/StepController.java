@@ -34,7 +34,7 @@ public class StepController {
 	
 	@GetMapping("/get")
 	public StepEntity getStep(@RequestBody StepEntity stepEntity) {
-		return stepService.findById(stepEntity.getId());
+		return stepService.findById(stepEntity.getStepid());
 	}
 	
 	@PostMapping("/save")
@@ -47,9 +47,10 @@ public class StepController {
 	@PutMapping("/update")
 	@ResponseStatus(HttpStatus.CREATED)
 	public StepEntity update(@RequestBody StepEntity stepEntity) {
-		StepEntity currentStep = stepService.findById(stepEntity.getId());
+		StepEntity currentStep = stepService.findById(stepEntity.getStepid());
 		
 		currentStep.setName(stepEntity.getName());
+		currentStep.setCallidfk(stepEntity.getCallidfk());
 		currentStep.setDescription(stepEntity.getDescription());
 		currentStep.setComment(stepEntity.getComment());
 		
@@ -60,7 +61,7 @@ public class StepController {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@RequestBody StepEntity stepEntity) {
 		try{
-			stepService.delete(stepEntity.getId());
+			stepService.delete(stepEntity.getStepid());
 		}catch (Exception e) {
 			ResponseEntity.badRequest().body(HttpStatus.BAD_REQUEST);
 		}

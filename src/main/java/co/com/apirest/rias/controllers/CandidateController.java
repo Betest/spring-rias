@@ -33,7 +33,7 @@ public class CandidateController {
 	
 	@GetMapping("/get")
 	public CandidateEntity getCalls(@RequestBody CandidateEntity candidateEntity) {
-		return candidateService.findById(candidateEntity.getId());
+		return candidateService.findById(candidateEntity.getCandidateid());
 	}
 	
 	@PostMapping("/save")
@@ -46,10 +46,9 @@ public class CandidateController {
 	@PutMapping("/update")
 	@ResponseStatus(HttpStatus.CREATED)
 	public CandidateEntity update(@RequestBody CandidateEntity candidateEntity) {
-		CandidateEntity currentCandidate = candidateService.findById(candidateEntity.getId());
+		CandidateEntity currentCandidate = candidateService.findById(candidateEntity.getCandidateid());
 		
 		currentCandidate.setName(candidateEntity.getName());
-		currentCandidate.setDetailId(candidateEntity.getDetailId());
 		currentCandidate.setLastName(candidateEntity.getLastName());
 		currentCandidate.setSalaryAspiration(candidateEntity.getSalaryAspiration());
 		
@@ -60,7 +59,7 @@ public class CandidateController {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@RequestBody CandidateEntity candidateEntity) {
 		try{
-			candidateService.delete(candidateEntity.getId());
+			candidateService.delete(candidateEntity.getCandidateid());
 		}catch (Exception e) {
 			ResponseEntity.badRequest().body(HttpStatus.BAD_REQUEST);
 		}
